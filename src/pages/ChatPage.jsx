@@ -37,7 +37,7 @@ const ChatPage = () => {
   const fetchConversations = useCallback(async () => {
     if (!userInfo) return;
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/conversations`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/conversations`, {
         headers: { 'Authorization': `Bearer ${userInfo.token}` }
       });
       if (res.ok) {
@@ -62,7 +62,7 @@ const ChatPage = () => {
     setIsLoading(true);
     speechService.cancel();
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/conversations/${convoId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/conversations/${convoId}`, {
         headers: { 'Authorization': `Bearer ${userInfo.token}` }
       });
       if (res.ok) {
@@ -132,7 +132,7 @@ const ChatPage = () => {
 
       let activeConversationId = currentConversationId;
 
-      const userMessageRes = await fetch(`${process.env.REACT_APP_API_URL}/api/conversations`, {
+      const userMessageRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/conversations`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -151,7 +151,7 @@ const ChatPage = () => {
           setCurrentConversationId(activeConversationId);
         }
 
-        await fetch(`${process.env.REACT_APP_API_URL}/api/conversations`, {
+        await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/conversations`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
