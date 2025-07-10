@@ -5,16 +5,14 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 
-// CORRECTED: Simplified import paths
 import ChatPage from './pages/ChatPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
 import AuthSuccessPage from './pages/AuthSuccessPage.jsx';
 
-// Import the main stylesheet
 import './index.css';
 
-// Define the application's routes
+
 const router = createBrowserRouter([
   {
     path: '/',
