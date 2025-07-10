@@ -1,14 +1,10 @@
-// src/services/gemini.js
-
-// This is where you will eventually put your API key in a .env file.
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || ""; 
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
 
 export const callGeminiAPI = async (message) => {
-  // If no API key is found, return a default mock response for UI testing.
   if (!GEMINI_API_KEY) {
     console.warn("Gemini API key not found. Returning a mock response.");
-    // This simulates a network delay so the loading indicator has time to show.
+
     await new Promise(resolve => setTimeout(resolve, 1000)); 
     return "This is a mock response. Please add your Gemini API key to enable the real AI.";
   }
