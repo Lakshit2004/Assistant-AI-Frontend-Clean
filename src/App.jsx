@@ -1,19 +1,13 @@
-// src/App.jsx
 import React, { useState, useEffect } from 'react';
-
-// Import Services
 import { callGeminiAPI } from './services/gemini';
 import speechService from './services/speech';
-
-// Import Components
 import Header from './components/Header';
 import MessageList from './components/MessageList';
 import InputArea from './components/InputArea';
 import DeveloperModal from './components/DeveloperModal';
 
 const App = () => {
-  // --- STATE MANAGEMENT ---
-  // UI State
+
   const [darkMode, setDarkMode] = useState(true);
   const [chatMode, setChatMode] = useState('text'); // 'text' or 'voice'
   const [showDeveloper, setShowDeveloper] = useState(false);
@@ -30,10 +24,9 @@ const App = () => {
   // Voice Controls
   const [voiceEnabled, setVoiceEnabled] = useState(true);
 
-  // --- LIFECYCLE HOOKS ---
-  // Load initial data from localStorage on component mount
+
   useEffect(() => {
-    // Load theme preference
+
     const savedDarkMode = localStorage.getItem('darkMode');
     if (savedDarkMode !== null) {
       setDarkMode(JSON.parse(savedDarkMode));
@@ -44,7 +37,6 @@ const App = () => {
     if (savedMessages) {
       setMessages(JSON.parse(savedMessages));
     } else {
-      // Set initial welcome message if no history
       setMessages([{
         id: Date.now(),
         text: "Hello! I'm your AI assistant. Choose text chat or voice mode to get started. How can I help you today?",
@@ -54,13 +46,11 @@ const App = () => {
     }
   }, []);
 
-  // Save theme and messages to localStorage whenever they change
   useEffect(() => {
     localStorage.setItem('darkMode', JSON.stringify(darkMode));
     localStorage.setItem('chatHistory', JSON.stringify(messages));
   }, [darkMode, messages]);
   
-  // --- CORE LOGIC ---
   const sendMessage = async (messageText = inputMessage) => {
     if (!messageText.trim() || isLoading) return;
 
@@ -110,7 +100,6 @@ const App = () => {
     speechService.startListening({
       onResult: (transcript) => {
         setInputMessage(transcript);
-        // Automatically send the message after transcription
         sendMessage(transcript); 
       },
       onEnd: () => setIsListening(false),
