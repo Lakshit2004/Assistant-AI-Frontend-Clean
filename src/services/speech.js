@@ -1,6 +1,4 @@
-// utils/speech.js
 
-// Speak text aloud
 export function speakText(text) {
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = "en-US";
@@ -8,7 +6,6 @@ export function speakText(text) {
   speechSynthesis.speak(utterance);
 }
 
-// Start speech recognition
 export function startRecognition(onResult, onEnd) {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -34,11 +31,7 @@ export function startRecognition(onResult, onEnd) {
 
   return recognition;
 }
-// src/services/speech.js
 
-/**
- * A class to manage speech synthesis (text-to-speech) and recognition (speech-to-text).
- */
 class SpeechService {
   constructor() {
     // --- Speech Synthesis (Text-to-Speech) ---
@@ -62,23 +55,18 @@ class SpeechService {
       this.recognition = null;
     }
 
-    // Bind methods to ensure 'this' context is correct
+
     this.speak = this.speak.bind(this);
     this.cancel = this.cancel.bind(this);
     this.startListening = this.startListening.bind(this);
     this.stopListening = this.stopListening.bind(this);
   }
 
-  /**
-   * Speaks the given text using the browser's speech synthesis API.
-   * @param {string} text - The text to be spoken.
-   * @param {function} onStart - Callback function when speech starts.
-   * @param {function} onEnd - Callback function when speech ends.
-   */
+
   speak(text, onStart, onEnd) {
     if (!this.synth || !text) return;
 
-    this.cancel(); // Cancel any ongoing speech
+    this.cancel(); 
 
     this.utterance.text = text;
     this.utterance.onstart = () => {
@@ -91,27 +79,20 @@ class SpeechService {
     };
      this.utterance.onerror = () => {
       this.isSpeaking = false;
-      if (onEnd) onEnd(); // Also call onEnd on error
+      if (onEnd) onEnd(); 
     };
 
     this.synth.speak(this.utterance);
   }
 
-  /**
-   * Cancels any ongoing speech.
-   */
+
   cancel() {
     if (this.synth && this.isSpeaking) {
       this.synth.cancel();
     }
   }
 
-  /**
-   * Starts listening for voice input.
-   * @param {function} onResult - Callback with the transcribed text.
-   * @param {function} onEnd - Callback when listening ends.
-   * @param {function} onError - Callback for any errors.
-   */
+
   startListening({ onResult, onEnd, onError }) {
     if (!this.recognition || this.isListening) return;
     
@@ -120,7 +101,7 @@ class SpeechService {
     this.recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript;
       if (onResult) onResult(transcript);
-      this.stopListening(); // Automatically stop after getting a result
+      this.stopListening(); 
     };
 
     this.recognition.onend = () => {
@@ -136,9 +117,7 @@ class SpeechService {
     this.recognition.start();
   }
 
-  /**
-   * Manually stops the speech recognition.
-   */
+
   stopListening() {
     if (this.recognition && this.isListening) {
       this.recognition.stop();
